@@ -1,0 +1,20 @@
+# Base image (pytorch/pytorch:2.9.1-cuda12.8-cudnn9-runtime) provides torch + torchvision.
+# interf0 needs only torch/torchvision/Pillow/numpy. interf1 needs the full TRIDENT
+# stack (tiling + H-Optimus) + the bundled reg2026 pipeline deps.
+#
+# TRIDENT pulls: transformers, timm==0.9.16, h5py, einops, opencv-python, scipy,
+# scikit-image, pandas, shapely, geopandas, safetensors, huggingface_hub, and
+# openslide-python + openslide-bin (bundles libopenslide -> NO apt needed).
+# torch is "*" in TRIDENT, so the base image's 2.9.1 is kept (no repin).
+Pillow
+numpy
+tifffile
+imagecodecs
+pyyaml
+einops_exts
+# TITAN VL-LoRA hybrid OOD path (interf1): TITAN remote code + LoRA adapter. Pin transformers to the
+# version the whole stack (H-Opt timm + MedCPT + TITAN trust_remote_code) is validated against locally;
+# TRIDENT leaves transformers unpinned, so without this the build floats to an untested release.
+transformers==4.57.6
+peft==0.19.1
+trident @ git+https://github.com/mahmoodlab/TRIDENT.git

@@ -1,0 +1,12 @@
+# Large binaries - managed on disk / DVC, never in git
+*.tar.gz
+model.tar.gz
+model/
+__pycache__/
+*.pyc
+*.log
+reg2026_algorithm_*.tar.gz
+
+# Local do_test_run fixtures (WSI inputs, ~GB) - never in git
+test/
+docs/
